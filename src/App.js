@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import moment from 'moment';
 import styled from 'styled-components';
+import Expanse from './Expanse'
+import Incomes from './Incomes'
 
 // sreate component with styled-components (add style in js)
 const DateButton = styled.button`
@@ -12,6 +14,9 @@ const DateButton = styled.button`
     border: 0;
     margin: 2px;
     min-width: 30px;
+    :hover{
+        opacity: .8
+    }
 `;
 
 const DateLine = styled.div`
@@ -83,6 +88,7 @@ class App extends Component {
                             Доходы
                         </Link>
                     </Nav>
+                    {navSelected === 'expanse' ? <Expanse /> : <Incomes />}
                 </main>
             </section>
         );
