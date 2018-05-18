@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import logo from '../logo.svg';
-import './App.css';
 import moment from 'moment';
 import styled from 'styled-components';
 import Expanse from './Expanse'
@@ -38,7 +36,7 @@ const Link = styled.span`
         selected ? '1px solid white' : 'none'};
 `;
 
-class App extends Component {
+class Budget extends Component {
     constructor(props) {
         super(props);
 
@@ -95,4 +93,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default Budget;

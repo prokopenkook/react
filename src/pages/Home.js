@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 /*
 Example
 export default (props) => {
@@ -7,14 +7,18 @@ export default (props) => {
         <div>Home</div>
     )
 };*/
-export default class Home extends React.Component{
+class Home extends Component{
     componentWillMount(){
         //this.props.history.push('home?ijustgotpushed=true')
     }
 
     render(){
         return (
-            <div> hi </div>
+            <div>
+                <h1>Home</h1>
+            </div>
         )
     }
 }
+
+export default Home;
