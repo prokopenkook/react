@@ -1,6 +1,8 @@
 .profile{
     padding: 50px 20px;
     text-align: center;
+    background: #20c8ff;
+    color: #fff;
 }
 .profile__photo{
     display: inline-block;
