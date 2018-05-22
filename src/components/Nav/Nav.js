@@ -14,6 +14,18 @@ class Nav extends Component {
                     <li>
                         <Link to="/info">Info</Link>
                     </li>
+                    <li>
+                        <Link to="/">Dashboard</Link>
+                    </li>
+                    <li>
+                        <Link to="/">Photo</Link>
+                    </li>
+                    <li>
+                        <Link to="/">Favorites</Link>
+                    </li>
+                    <li>
+                        <Link to="/">Inbox</Link>
+                    </li>
                 </ul>
             </div>
         );
