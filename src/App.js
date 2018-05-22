@@ -1,13 +1,11 @@
 import React from 'react'
-import Header from './layouts/header'
+import LeftSide from './layouts/leftSide'
 import Main from './layouts/main'
-import Footer from './layouts/footer'
 
 const App = () => (
-    <div>
-        <Header />
+    <div className="container">
+        <LeftSide />
         <Main />
-        <Footer />
     </div>
 );
 

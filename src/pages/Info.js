@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
-import Budget from "../components/Budget";
+import Budget from "../components/Budget/Budget";
 
 class Info extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (

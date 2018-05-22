@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
-import Expanse from './Expanse'
-import Incomes from './Incomes'
+import Expanse from '../Expanse/Expanse'
+import Incomes from '../Incomes/Incomes'
+import './index.css'
 
 // sreate component with styled-components (add style in js)
 const DateButton = styled.button`
@@ -62,16 +63,16 @@ class Budget extends Component {
     render() {
         const {date, navSelected} = this.state;
         return (
-            <section className="App">
-                <header className="App_header">
+            <section className="budget">
+                <div className="budget__header">
                     <h1 className="App_title">Реактивный бюджет</h1>
                     <DateLine>
                         <p>{date.format('DD.MM.YYYY')}</p>
                         <DateButton onClick={this.handleSubtractDay}>-</DateButton>
                         <DateButton onClick={this.handleAddDay}>+</DateButton>
                     </DateLine>
-                </header>
-                <main>
+                </div>
+                <div className="budget__main">
                     <Nav>
                         <Link
                             name="expanse"
@@ -87,7 +88,7 @@ class Budget extends Component {
                         </Link>
                     </Nav>
                     {navSelected === 'expanse' ? <Expanse /> : <Incomes />}
-                </main>
+                </div>
             </section>
         );
     }
