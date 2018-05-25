@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Expanse from '../Expanse/Expanse'
 import Incomes from '../Incomes/Incomes'
 import './index.css'
+import {findLastIndex} from 'lodash';
 
 // sreate component with styled-components (add style in js)
 const DateButton = styled.button`
@@ -43,8 +44,9 @@ class Budget extends Component {
 
         this.state = {
             date: moment(),
-            navSelected: 'expanse'
-        }
+            navSelected: 'expanse',
+            transactions:[]
+        };
     }
 
 
@@ -61,7 +63,7 @@ class Budget extends Component {
     };
 
     handleSubmitTransaction = (sum, category) => {
-        console.log(sum, category);
+
     };
 
     render() {
