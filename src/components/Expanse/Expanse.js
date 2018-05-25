@@ -44,17 +44,29 @@ const Button = styled.button`
 `;
 
 export  class  Expanse  extends Component{
-    constructor(props) {
-        super(props);
+    state = {
+        transaction: null,
+        category: null,
+    };
 
-        this.state = {}
-    }
+    handleChangeInput = event => {
+        this.setState({[event.target.name]: event.target.value});
+    };
+
+    handleEnter = () =>{
+        const {onSubmit} = this.props;
+        const {transaction, category} = this.state;
+
+        onSubmit(-1 * Math.abs(parseFloat(transaction)), category);
+        this.setState({transaction: null, category: null});
+    };
 
     render() {
         const {transaction, category} = this.state;
+
         return (
             <Container>
-                <dl>
+                <div>
                     <InputLine>
                         <LineTitle>Внести расход:</LineTitle>
                         <LineInput>
@@ -75,7 +87,7 @@ export  class  Expanse  extends Component{
                             />
                         </LineInput>
                     </InputLine>
-                </dl>
+                </div>
                 <Button onClick={this.handleEnter}>Внести</Button>
             </Container>
         );

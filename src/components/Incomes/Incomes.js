@@ -53,7 +53,9 @@ export  class  Incomes  extends Component{
     render() {
         const {date, navSelected} = this.state;
         return (
-            <div></div>
+            <div>
+
+            </div>
         );
     }
 }

@@ -60,6 +60,10 @@ class Budget extends Component {
         this.setState({navSelected: event.target.getAttribute('name')})
     };
 
+    handleSubmitTransaction = (sum, category) => {
+        console.log(sum, category);
+    };
+
     render() {
         const {date, navSelected} = this.state;
         return (
@@ -87,7 +91,11 @@ class Budget extends Component {
                             Доходы
                         </Link>
                     </Nav>
-                    {navSelected === 'expanse' ? <Expanse /> : <Incomes />}
+                    {navSelected === 'expanse' ? (
+                        <Expanse onSubmit={this.handleSubmitTransaction}/>
+                        ) : (
+                        <Incomes onSubmit={this.handleSubmitTransaction}/>
+                    )}
                 </div>
             </section>
         );
