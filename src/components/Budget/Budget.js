@@ -63,7 +63,30 @@ class Budget extends Component {
     };
 
     handleSubmitTransaction = (sum, category) => {
+        const {date: TodayDate, transactions} = this.state;
 
+        const newTransaction = {
+            date: TodayDate.format('DD.MM.YYYY'),
+            category: category,
+            sum: sum,
+        };
+
+        const index = findLastIndex(transactions, ({date}) => {
+            const transactionDate = moment(date, 'DD.MM.YYYY');
+            return (
+                TodayDate.isBefore(transactionDate, 'day') ||
+                TodayDate.isSame(transactionDate, 'day')
+            );
+        });
+
+        const newTransactions = [ ...transactions];
+        newTransactions.splice(
+            index === -1 ? transactions.length : index,
+            0,
+            newTransaction,
+        );
+
+        this.setState({transactions: newTransactions});
     };
 
     render() {
