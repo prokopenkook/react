@@ -36,6 +36,17 @@ const Link = styled.span`
     border-bottom: ${({selected}) => 
         selected ? '1px solid white' : 'none'};
 `;
+const Button = styled.button`
+  font-family: 'Marmelad';
+  color: white;
+  border: 1px solid white;
+  border-radius: 31px;
+  background-color: transparent;
+  margin: 3px;
+  cursor: pointer;
+  text-align: center;
+  padding: 5px 20px;
+`;
 
 class Budget extends Component {
     constructor(props) {
@@ -54,7 +65,6 @@ class Budget extends Component {
                 transactions:[]
             };
         }
-
         this.state = initState;
 
 
@@ -91,6 +101,11 @@ class Budget extends Component {
         });
 
         this.setState({transactions: newTransactions});
+    };
+
+    clearAllTransaction = (sum, category) => {
+        localStorage.clear();
+        this.setState({transactions: []});
     };
 
     componentDidUpdate() {
@@ -182,6 +197,7 @@ class Budget extends Component {
                             ))}
                         </tbody>
                     </table>
+                    <Button onClick={this.clearAllTransaction}>Очистить</Button>
                 </div>
             </section>
         );
