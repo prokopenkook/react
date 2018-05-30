@@ -6,7 +6,7 @@ import Incomes from '../Incomes/Incomes'
 import './index.css'
 import {findLastIndex} from 'lodash';
 
-// sreate component with styled-components (add style in js)
+// create component with styled-components (add style in js)
 const DateButton = styled.button`
     color: white;
     background: green;

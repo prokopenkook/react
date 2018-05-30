@@ -44,18 +44,52 @@ const Button = styled.button`
 `;
 
 export  class  Incomes  extends Component{
-    constructor(props) {
-        super(props);
+    state = {
+        transaction: null,
+        category: null,
+    };
 
-        this.state = {}
-    }
+    handleChangeInput = event => {
+        this.setState({[event.target.name]: event.target.value});
+    };
+
+    handleEnter = () =>{
+        const {onSubmit} = this.props;
+        const {transaction, category} = this.state;
+
+        onSubmit(Math.abs(parseFloat(transaction)), category);
+        this.setState({transaction: null, category: null});
+    };
 
     render() {
-        const {date, navSelected} = this.state;
-        return (
-            <div>
+        const {transaction, category} = this.state;
 
-            </div>
+        return (
+            <Container>
+                <div>
+                    <InputLine>
+                        <LineTitle>Внести доход:</LineTitle>
+                        <LineInput>
+                            <Input
+                                name="transaction"
+                                onChange={this.handleChangeInput}
+                                value={transaction || ''}
+                            />
+                        </LineInput>
+                    </InputLine>
+                    <InputLine>
+                        <LineTitle>Категория:</LineTitle>
+                        <LineInput>
+                            <Input
+                                name="category"
+                                onChange={this.handleChangeInput}
+                                value={category || ''}
+                            />
+                        </LineInput>
+                    </InputLine>
+                </div>
+                <Button onClick={this.handleEnter}>Внести</Button>
+            </Container>
         );
     }
 }
