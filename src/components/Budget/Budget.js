@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Expanse from '../Expanse/Expanse'
 import Incomes from '../Incomes/Incomes'
 import './index.css'
-import {findLastIndex} from 'lodash';
 
 // create component with styled-components (add style in js)
 const DateButton = styled.button`
@@ -42,11 +41,23 @@ class Budget extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            date: moment(),
-            navSelected: 'expanse',
-            transactions:[]
-        };
+        let storageState = localStorage.getItem('state');
+        let initState;
+
+        if(storageState != null)  {
+            storageState = JSON.parse(storageState);
+            initState = {...storageState, date: moment(storageState.date)}
+        } else {
+            initState = {
+                date: moment(),
+                navSelected: 'expanse',
+                transactions:[]
+            };
+        }
+
+        this.state = initState;
+
+
     }
 
 
@@ -71,26 +82,61 @@ class Budget extends Component {
             sum: sum,
         };
 
-        const index = findLastIndex(transactions, ({date}) => {
-            const transactionDate = moment(date, 'DD.MM.YYYY');
-            return (
-                TodayDate.isBefore(transactionDate, 'day') ||
-                TodayDate.isSame(transactionDate, 'day')
-            );
-        });
+        const newTransactions = [ ...transactions, newTransaction];
 
-        const newTransactions = [ ...transactions];
-        newTransactions.splice(
-            index === -1 ? transactions.length : index,
-            0,
-            newTransaction,
-        );
+        newTransactions.sort((a, b) => {
+            const aDate = moment(a.date, 'DD.MM.YYYY');
+            const bDate = moment(b.date, 'DD.MM.YYYY');
+            return aDate.isAfter(bDate);
+        });
 
         this.setState({transactions: newTransactions});
     };
 
+    componentDidUpdate() {
+        const {date} = this.state;
+        localStorage.setItem(
+            'state',
+            JSON.stringify({...this.state, date: date.format()}),
+        );
+    }
+
+    onToday = () => {
+        const {transactions, date} = this.state;
+
+        const currentMonthTransactions = transactions.filter(
+            ({date: transactionDate}) =>
+                moment(transactionDate, 'DD.MM.YYYY').isSame(date, 'month'),
+        );
+
+        const dailyMoney =
+            currentMonthTransactions.reduce(
+                (acc, transaction) =>
+                    transaction.sum > 0 ? transaction.sum + acc : acc,
+                0,
+            ) / moment(date).daysInMonth();
+
+        const transactionsBeforeThisDayAndInThisDay = currentMonthTransactions.filter(
+            ({date: transactionDate}) =>
+                moment(transactionDate, 'DD.MM.YYYY').isBefore(
+                    date,
+                    'date',
+                ) ||
+                moment(transactionDate, 'DD.MM.YYYY').isSame(date, 'date'),
+        );
+
+        const expanseBeforeToday = transactionsBeforeThisDayAndInThisDay.reduce(
+            (acc, {sum}) => (sum < 0 ? acc + sum : acc),
+            0,
+        );
+
+        const incomeBeforeToday = date.date() * dailyMoney;
+
+        return incomeBeforeToday + expanseBeforeToday;
+    };
+
     render() {
-        const {date, navSelected} = this.state;
+        const {date, navSelected, transactions} = this.state;
         return (
             <section className="budget">
                 <div className="budget__header">
@@ -100,6 +146,7 @@ class Budget extends Component {
                         <DateButton onClick={this.handleSubtractDay}>-</DateButton>
                         <DateButton onClick={this.handleAddDay}>+</DateButton>
                     </DateLine>
+                    <p>На сегодня: {this.onToday()}грн.</p>
                 </div>
                 <div className="budget__main">
                     <Nav>
@@ -121,6 +168,20 @@ class Budget extends Component {
                         ) : (
                         <Incomes onSubmit={this.handleSubmitTransaction}/>
                     )}
+                    <table>
+                        <tbody>
+                        {transactions
+                            .filter(({date: transactionDate}) => moment(transactionDate,
+                            'DD.MM.YYYY').isSame(date, 'month'))
+                            .map(({date, sum, category}, index) => (
+                                <tr key={index}>
+                                    <td>{date}</td>
+                                    <td>{sum}</td>
+                                    <td>{category}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             </section>
         );
