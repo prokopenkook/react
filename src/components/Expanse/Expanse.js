@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const Container = styled.article`
   display: flex;
@@ -17,12 +17,16 @@ const Input = styled.input`
   font-size: 20px;
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid #c2c2c2;
   margin-left: 5px;
-  color: white;
+  color: #c2c2c2;
   width: 100%;
   padding: 0;
   margin: 0;
+  &:focus {
+    outline: none;
+    border-bottom-color: #c2c2c2;
+  }
 `;
 const LineTitle = styled.dt`
   width: 150px;
@@ -33,20 +37,24 @@ const LineInput = styled.dd`
 `;
 const Button = styled.button`
   font-family: 'Marmelad';
-  color: white;
-  border: 1px solid white;
+  color: #c2c2c2;
+  border: 1px solid #c2c2c2;
   border-radius: 31px;
   background-color: transparent;
   margin: 3px;
   cursor: pointer;
   text-align: center;
   padding: 5px 20px;
+  &:focus {
+    outline: none;
+  }
 `;
 
 export  class  Expanse  extends Component{
     state = {
         transaction: null,
         category: null,
+        error: 'no-error',
     };
 
     handleChangeInput = event => {
@@ -55,14 +63,19 @@ export  class  Expanse  extends Component{
 
     handleEnter = () =>{
         const {onSubmit} = this.props;
-        const {transaction, category} = this.state;
+        const {transaction, category, error} = this.state;
 
-        onSubmit(-1 * Math.abs(parseFloat(transaction)), category);
-        this.setState({transaction: null, category: null});
+        if(transaction != null){
+            onSubmit(-1 * Math.abs(parseFloat(transaction)), category, error);
+            this.setState({transaction: null, category: null, error: 'no-error'});
+        } else {
+            this.setState({error: 'error'});
+        }
+
     };
 
     render() {
-        const {transaction, category} = this.state;
+        const {transaction, category, error} = this.state;
 
         return (
             <Container>
@@ -74,6 +87,7 @@ export  class  Expanse  extends Component{
                                 name="transaction"
                                 onChange={this.handleChangeInput}
                                 value={transaction || ''}
+                                className={error}
                             />
                         </LineInput>
                     </InputLine>

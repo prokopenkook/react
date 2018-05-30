@@ -6,7 +6,7 @@ class Nav extends Component {
 
     render() {
         return (
-            <div>
+            <div className="nav">
                 <ul>
                     <li>
                         <Link to="/">Home</Link>

@@ -1,10 +1,13 @@
+.nav{
+    transform: translateY(-50%);
+    margin: 0 20px;
+}
 ul{
     list-style-type: none;
     padding-left: 0;
     display: flex;
     flex-wrap: wrap;
     margin: 0;
-    transform: translateY(-50%);
 }
 li{
     width: 33.3%;

@@ -7,12 +7,14 @@ import './index.css'
 
 // create component with styled-components (add style in js)
 const DateButton = styled.button`
-    color: white;
-    background: green;
+    color: #20c8ff;
+    font-weight: bold;
+    background: transparent;
     padding: 10px;
-    border: 0;
-    margin: 2px;
-    min-width: 30px;
+    border: 2px solid #20c8ff;
+    border-radius: 50%;
+    margin: 0 5px;
+    min-width: 39px;
     :hover{
         opacity: .8
     }
@@ -30,22 +32,25 @@ const Nav = styled.nav`
     justify-content: center;
 `;
 const Link = styled.span`
-    color: white;
+    color: #20c8ff;
     margin: 0 8px;
     cursor: pointer;
     border-bottom: ${({selected}) => 
-        selected ? '1px solid white' : 'none'};
+        selected ? '1px solid #20c8ff' : 'none'};
 `;
 const Button = styled.button`
   font-family: 'Marmelad';
-  color: white;
-  border: 1px solid white;
+  color: #c2c2c2;
+  border: 1px solid #c2c2c2;
   border-radius: 31px;
   background-color: transparent;
   margin: 3px;
   cursor: pointer;
   text-align: center;
   padding: 5px 20px;
+   &:focus {
+    outline: none;
+  }
 `;
 
 class Budget extends Component {
@@ -66,8 +71,6 @@ class Budget extends Component {
             };
         }
         this.state = initState;
-
-
     }
 
 

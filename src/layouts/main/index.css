@@ -2,4 +2,6 @@
     width: 67%;
     float: right;
     padding: 20px;
+    min-height: calc(100vh - 40px);
+    background: #eeeeee;
 }
